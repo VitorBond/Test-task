@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище databaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CARD">
+    <Key>
+      <PropertyRef Name="CARDCODE" />
+    </Key>
+    <Property Name="CARDCODE" Type="bigint" Nullable="false" />
+    <Property Name="STARTDATE" Type="date" />
+    <Property Name="FINISHDATE" Type="date" />
+    <Property Name="LASTNAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="FIRSTNAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="SURNAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="FULLNAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="GENDERID" Type="int" />
+    <Property Name="BIRTHDAY" Type="date" />
+    <Property Name="PHONEHOME" Type="nvarchar" MaxLength="20" />
+    <Property Name="PHONEMOBIL" Type="nvarchar" MaxLength="20" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="150" />
+    <Property Name="CITY" Type="nvarchar" MaxLength="150" />
+    <Property Name="STREET" Type="nvarchar" MaxLength="150" />
+    <Property Name="HOUSE" Type="int" />
+    <Property Name="APARTMENT" Type="int" />
+    <Property Name="ALTADDRESS" Type="nvarchar(max)" />
+    <Property Name="CARDTYPE" Type="nvarchar(max)" />
+    <Property Name="OWNERGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CARDPER" Type="int" Nullable="false" />
+    <Property Name="TURNOVER" Type="numeric" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="GENDERID" />
+    </Key>
+    <Property Name="GENDERID" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="nchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CARD_GENDER">
+    <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+    <End Role="CARD" Type="Self.CARD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="GENDERID" />
+      </Principal>
+      <Dependent Role="CARD">
+        <PropertyRef Name="GENDERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище databaseModelContainer">
+    <EntitySet Name="CARD" EntityType="Self.CARD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CARD_GENDER" Association="Self.FK_CARD_GENDER">
+      <End Role="Gender" EntitySet="Gender" />
+      <End Role="CARD" EntitySet="CARD" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

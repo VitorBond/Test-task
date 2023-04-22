@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище databaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CARD">
+          <Key>
+            <PropertyRef Name="CARDCODE" />
+          </Key>
+          <Property Name="CARDCODE" Type="bigint" Nullable="false" />
+          <Property Name="STARTDATE" Type="date" />
+          <Property Name="FINISHDATE" Type="date" />
+          <Property Name="LASTNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="FIRSTNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="SURNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="FULLNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="GENDERID" Type="int" />
+          <Property Name="BIRTHDAY" Type="date" />
+          <Property Name="PHONEHOME" Type="nvarchar" MaxLength="20" />
+          <Property Name="PHONEMOBIL" Type="nvarchar" MaxLength="20" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="150" />
+          <Property Name="CITY" Type="nvarchar" MaxLength="150" />
+          <Property Name="STREET" Type="nvarchar" MaxLength="150" />
+          <Property Name="HOUSE" Type="int" />
+          <Property Name="APARTMENT" Type="int" />
+          <Property Name="ALTADDRESS" Type="nvarchar(max)" />
+          <Property Name="CARDTYPE" Type="nvarchar(max)" />
+          <Property Name="OWNERGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CARDPER" Type="int" Nullable="false" />
+          <Property Name="TURNOVER" Type="numeric" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GENDERID" />
+          </Key>
+          <Property Name="GENDERID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="nchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CARD_GENDER">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+          <End Role="CARD" Type="Self.CARD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GENDERID" />
+            </Principal>
+            <Dependent Role="CARD">
+              <PropertyRef Name="GENDERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище databaseModelContainer">
+          <EntitySet Name="CARD" EntityType="Self.CARD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CARD_GENDER" Association="Self.FK_CARD_GENDER">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="CARD" EntitySet="CARD" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="databaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CARD">
+          <Key>
+            <PropertyRef Name="CARDCODE" />
+          </Key>
+          <Property Name="CARDCODE" Type="Int64" Nullable="false" />
+          <Property Name="STARTDATE" Type="DateTime" Precision="0" />
+          <Property Name="FINISHDATE" Type="DateTime" Precision="0" />
+          <Property Name="LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FIRSTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FULLNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GENDERID" Type="Int32" />
+          <Property Name="BIRTHDAY" Type="DateTime" Precision="0" />
+          <Property Name="PHONEHOME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PHONEMOBIL" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CITY" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="STREET" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="HOUSE" Type="Int32" />
+          <Property Name="APARTMENT" Type="Int32" />
+          <Property Name="ALTADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CARDTYPE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OWNERGUID" Type="Guid" Nullable="false" />
+          <Property Name="CARDPER" Type="Int32" Nullable="false" />
+          <Property Name="TURNOVER" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_CARD_GENDER" FromRole="CARD" ToRole="Gender" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GENDERID" />
+          </Key>
+          <Property Name="GENDERID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CARDs" Relationship="Self.FK_CARD_GENDER" FromRole="Gender" ToRole="CARD" />
+        </EntityType>
+        <Association Name="FK_CARD_GENDER">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+          <End Role="CARD" Type="Self.CARD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GENDERID" />
+            </Principal>
+            <Dependent Role="CARD">
+              <PropertyRef Name="GENDERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="databaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CARDs" EntityType="Self.CARD" />
+          <EntitySet Name="Genders" EntityType="Self.Gender" />
+          <AssociationSet Name="FK_CARD_GENDER" Association="Self.FK_CARD_GENDER">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="CARD" EntitySet="CARDs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище databaseModelContainer" CdmEntityContainer="databaseEntities">
+          <EntitySetMapping Name="CARDs">
+            <EntityTypeMapping TypeName="databaseModel.CARD">
+              <MappingFragment StoreEntitySet="CARD">
+                <ScalarProperty Name="CARDCODE" ColumnName="CARDCODE" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
+                <ScalarProperty Name="FINISHDATE" ColumnName="FINISHDATE" />
+                <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+                <ScalarProperty Name="FIRSTNAME" ColumnName="FIRSTNAME" />
+                <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="GENDERID" ColumnName="GENDERID" />
+                <ScalarProperty Name="BIRTHDAY" ColumnName="BIRTHDAY" />
+                <ScalarProperty Name="PHONEHOME" ColumnName="PHONEHOME" />
+                <ScalarProperty Name="PHONEMOBIL" ColumnName="PHONEMOBIL" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="STREET" ColumnName="STREET" />
+                <ScalarProperty Name="HOUSE" ColumnName="HOUSE" />
+                <ScalarProperty Name="APARTMENT" ColumnName="APARTMENT" />
+                <ScalarProperty Name="ALTADDRESS" ColumnName="ALTADDRESS" />
+                <ScalarProperty Name="CARDTYPE" ColumnName="CARDTYPE" />
+                <ScalarProperty Name="OWNERGUID" ColumnName="OWNERGUID" />
+                <ScalarProperty Name="CARDPER" ColumnName="CARDPER" />
+                <ScalarProperty Name="TURNOVER" ColumnName="TURNOVER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="databaseModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="GENDERID" ColumnName="GENDERID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

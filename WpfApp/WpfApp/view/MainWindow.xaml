@@ -1,0 +1,85 @@
+﻿<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+		xmlns:viewmodel="clr-namespace:WpfApp.viewmodel"
+		mc:Ignorable="d"
+        Title="Тестовое задание" 
+		Height="450" 
+		Width="800">
+	<Window.DataContext>
+		<viewmodel:BaseViewModel/>
+	</Window.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<ToolBar Grid.Row="0">
+			<Button Command="{Binding ImportXml}">Ипортировать XML</Button>
+			<Separator />
+			<Button Command="{Binding Update}">Обновить таблицу</Button>
+			<Separator/>
+			<Button x:Name="EditButton"
+					Command="{Binding Edit}">Редактировать запись</Button>
+		</ToolBar>
+		<DataGrid x:Name="databaseGrid" 
+				  Grid.Row="1"
+				  CanUserAddRows="False"
+				  ColumnWidth="1*"
+				  AutoGenerateColumns="False"
+				  EnableColumnVirtualization="False"
+				  VerticalScrollBarVisibility="Visible"
+				  HorizontalScrollBarVisibility="Visible"
+				  SelectionMode="Single"
+				  SelectedItem="{Binding Selecteditem}"
+				  EnableRowVirtualization="False"
+				  ItemsSource="{Binding CARDs}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="CARDCODE"   Binding="{Binding CARDCODE}"/>
+				<DataGridTemplateColumn Header="STARTDATE" Width="auto">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<DatePicker SelectedDate="{Binding STARTDATE, StringFormat=\{0:dd.MM.yyyy\}}" BorderThickness="0"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="FINISHDATE" Width="auto">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<DatePicker SelectedDate="{Binding FINISHDATE, StringFormat=\{0:dd.MM.yyyy\}}" BorderThickness="0"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="LASTNAME"   Binding="{Binding LASTNAME}"/>
+				<DataGridTextColumn Header="FIRSTNAME"  Binding="{Binding FIRSTNAME}"/>
+				<DataGridTextColumn Header="SURNAME"    Binding="{Binding SURNAME}"/>
+				<DataGridTextColumn Header="FULLNAME"   Binding="{Binding FULLNAME}"/>
+				<DataGridTextColumn Header="GENDERID"   Binding="{Binding GENDERID}"/>
+				<DataGridTemplateColumn Header="BIRTHDAY" Width="auto">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<DatePicker SelectedDate="{Binding BIRTHDAY, StringFormat=\{0:dd.MM.yyyy\}}" BorderThickness="0"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="PHONEHOME"  Binding="{Binding PHONEHOME}"/>
+				<DataGridTextColumn Header="PHONEMOBIL" Binding="{Binding PHONEMOBIL}"/>
+				<DataGridTextColumn Header="EMAIL"      Binding="{Binding EMAIL}"/>
+				<DataGridTextColumn Header="CITY"       Binding="{Binding CITY}"/>
+				<DataGridTextColumn Header="STREET"     Binding="{Binding STREET}"/>
+				<DataGridTextColumn Header="HOUSE"      Binding="{Binding HOUSE}"/>
+				<DataGridTextColumn Header="APARTMENT"  Binding="{Binding APARTMENT}"/>
+				<DataGridTextColumn Header="ALTADDRESS" Binding="{Binding ALTADDRESS}"/>
+				<DataGridTextColumn Header="CARDTYPE"   Binding="{Binding CARDTYPE}"/>
+				<DataGridTextColumn Header="OWNERGUID"  Binding="{Binding OWNERGUID}"/>
+				<DataGridTextColumn Header="CARDPER"    Binding="{Binding CARDPER}"/>
+				<DataGridTextColumn Header="TURNOVER"   Binding="{Binding TURNOVER, StringFormat=n2}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</Window>
